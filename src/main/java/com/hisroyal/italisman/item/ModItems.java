@@ -15,6 +15,8 @@ public class ModItems {
 
 
     public static final RegistryObject<Item> TALISMAN_ANGEL = ITEMS.register("talisman_angel", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+    public static final RegistryObject<Item> TALISMAN_TRAVELLER = ITEMS.register("talisman_traveller", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+
 
 
 
