@@ -1,6 +1,14 @@
 {
   "itemGroup.talismantab": "Inventory Talismans",
+  "item.italisman.talisman": "Talisman",
   "item.italisman.talisman_angel": "Talisman of the Angel",
-  "item.italisman.talisman_traveller": "Talisman of the Traveller"
+  "item.italisman.talisman_traveller": "Talisman of the Traveller",
+  "item.italisman.talisman_hunter": "Talisman of the Hunter",
+  "item.italisman.talisman_warrior": "Talisman of the Warrior",
+  "tooltip.italisman.talisman_angel": "75% chance of completely negating fall damage",
+  "tooltip.italisman.talisman_traveller": "Gives you Speed 1 if you sprint",
+  "tooltip.italisman.talisman_hunter": "20% chance of doubling drops from mobs",
+  "tooltip.italisman.talisman_warrior": "Gives you Strength V for a 30 seconds when hit",
+  "tooltip.italisman.talisman_warrior2": "Does not work in offhand"
 
 }
