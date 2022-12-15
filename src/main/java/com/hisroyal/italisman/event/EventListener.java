@@ -89,6 +89,15 @@ public class EventListener {
         }
 
 
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_ANVIL.get()) {
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_waterbreather").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.consumable").withStyle(ChatFormatting.GRAY));
+
+
+
+        }
+
+
 
     }
 }

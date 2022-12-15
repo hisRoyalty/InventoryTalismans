@@ -21,7 +21,8 @@
   "tooltip.italisman.talisman_lavawalker": "Gives you Fire Resistance for 3 minutes once you touch lava",
   "tooltip.italisman.talisman_whirlwind": "75% chance of absorbing projectiles fired at you",
   "tooltip.italisman.talisman_anvil": "Repairs items in your inventory",
-  "tooltip.italisman.talisman_anvil2": "Ignores the repairing procedure if you are using the item"
+  "tooltip.italisman.talisman_anvil2": "Ignores the repairing procedure if you are using the item",
+  "tooltip.italisman.talisman_waterbreather": "Gives you Water Breathing for five minutes once you start drowning"
 
 
 
