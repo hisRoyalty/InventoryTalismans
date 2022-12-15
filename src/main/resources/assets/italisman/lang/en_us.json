@@ -5,10 +5,25 @@
   "item.italisman.talisman_traveller": "Talisman of the Traveller",
   "item.italisman.talisman_hunter": "Talisman of the Hunter",
   "item.italisman.talisman_warrior": "Talisman of the Warrior",
+  "item.italisman.talisman_knight": "Talisman of the Knight",
+  "item.italisman.talisman_lavawalker": "Talisman of the Lava Walker",
+  "item.italisman.talisman_whirlwind": "Talisman of the Whirlwind",
+  "item.italisman.talisman_anvil": "Talisman of the Anvil",
+  "item.italisman.talisman_waterbreather": "Talisman of the Water Breather",
+  "tooltip.italisman.consumable": "Consumable",
+  "tooltip.italisman.non-consumable": "Non-Consumable",
   "tooltip.italisman.talisman_angel": "75% chance of completely negating fall damage",
   "tooltip.italisman.talisman_traveller": "Gives you Speed 1 if you sprint",
   "tooltip.italisman.talisman_hunter": "20% chance of doubling drops from mobs",
   "tooltip.italisman.talisman_warrior": "Gives you Strength V for a 30 seconds when hit",
-  "tooltip.italisman.talisman_warrior2": "Does not work in offhand"
+  "tooltip.italisman.talisman_not_work_offhand": "Does not work in offhand",
+  "tooltip.italisman.talisman_knight": "30% to get Regeneration IV when hit",
+  "tooltip.italisman.talisman_lavawalker": "Gives you Fire Resistance for 3 minutes once you touch lava",
+  "tooltip.italisman.talisman_whirlwind": "75% chance of absorbing projectiles fired at you",
+  "tooltip.italisman.talisman_anvil": "Repairs items in your inventory",
+  "tooltip.italisman.talisman_anvil2": "Ignores the repairing procedure if you are using the item"
+
+
+
 
 }

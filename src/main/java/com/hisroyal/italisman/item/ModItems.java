@@ -18,6 +18,15 @@ public class ModItems {
     public static final RegistryObject<Item> TALISMAN_TRAVELLER = ITEMS.register("talisman_traveller", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
     public static final RegistryObject<Item> TALISMAN_HUNTER = ITEMS.register("talisman_hunter", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
     public static final RegistryObject<Item> TALISMAN_WARRIOR = ITEMS.register("talisman_warrior", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+    public static final RegistryObject<Item> TALISMAN_KNIGHT = ITEMS.register("talisman_knight", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+    public static final RegistryObject<Item> TALISMAN_LAVAWALKER = ITEMS.register("talisman_lavawalker", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+    public static final RegistryObject<Item> TALISMAN_WHIRLWIND = ITEMS.register("talisman_whirlwind", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+    public static final RegistryObject<Item> TALISMAN_ANVIL = ITEMS.register("talisman_anvil", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+    public static final RegistryObject<Item> TALISMAN_WATERBREATHER = ITEMS.register("talisman_waterbreather", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+
+
+
+
 
 
 

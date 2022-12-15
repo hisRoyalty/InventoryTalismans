@@ -20,24 +20,70 @@ public class EventListener {
     public static void onItemToolTip(final ItemTooltipEvent itemTooltipEvent) {
         if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_ANGEL.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_angel").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
+
+
 
         }
 
 
         if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_TRAVELLER.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_traveller").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
+
 
         }
 
 
         if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_HUNTER.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_hunter").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
+
 
         }
 
         if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_WARRIOR.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_warrior").withStyle(ChatFormatting.DARK_BLUE));
-            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_warrior2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_not_work_offhand").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.consumable").withStyle(ChatFormatting.GRAY));
+
+
+
+        }
+
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_KNIGHT.get()) {
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_knight").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_not_work_offhand").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.consumable").withStyle(ChatFormatting.GRAY));
+
+
+
+        }
+
+
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_KNIGHT.get()) {
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_lavawalker").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_not_work_offhand").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.consumable").withStyle(ChatFormatting.GRAY));
+
+
+
+        }
+
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_KNIGHT.get()) {
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_whirlwind").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
+
+
+
+        }
+
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_ANVIL.get()) {
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_anvil").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_anvil2").withStyle(ChatFormatting.YELLOW));
+
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
+
 
 
         }
