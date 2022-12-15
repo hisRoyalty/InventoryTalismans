@@ -139,10 +139,14 @@ public class TalismanEventListener {
                 return;
             }
             e.setCanceled(true);
-            IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-            for (int i = 0; i < inventory.getSlots(); i++) {
-                if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_LAVAWALKER.get()) {
-                    ItemStack mainStack = inventory.getStackInSlot(i);
+            Inventory inv = player.getInventory();
+
+            for(int slot = 0; slot < inv.getContainerSize(); ++slot) {
+                ItemStack stack = inv.getItem(slot);
+                if (stack.getItem() == ModItems.TALISMAN_LAVAWALKER.get()) {
+
+
+                    ItemStack mainStack = inv.getItem(slot);
                     mainStack.shrink(1);
                     player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
 
@@ -250,22 +254,25 @@ public class TalismanEventListener {
 
     @SubscribeEvent
     public static void onPlayerDrown(LivingHurtEvent e) {
+
         if (e.getSource() == DamageSource.DROWN && e.getEntity() instanceof Player player) {
+            Inventory inv = player.getInventory();
             if (player.hasEffect(MobEffects.WATER_BREATHING)) {
                 return;
             }
             e.setCanceled(true);
-            IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-            for (int i = 0; i < inventory.getSlots(); i++) {
-                if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_WATERBREATHER.get()) {
-                    ItemStack mainStack = inventory.getStackInSlot(i);
+            for (int slot = 0; slot < inv.getContainerSize(); ++slot) {
+                ItemStack stack = inv.getItem(slot);
+                if (stack.getItem() == ModItems.TALISMAN_LAVAWALKER.get()) {
+
+
+                    ItemStack mainStack = inv.getItem(slot);
                     mainStack.shrink(1);
-                    player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 6000));
+                    player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
 
 
                 }
             }
-
         }
     }
 
