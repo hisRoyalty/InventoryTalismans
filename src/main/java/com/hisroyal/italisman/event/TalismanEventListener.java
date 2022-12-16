@@ -3,6 +3,7 @@ package com.hisroyal.italisman.event;
 
 import com.hisroyal.italisman.InventoryTalisman;
 import com.hisroyal.italisman.item.ModItems;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -10,16 +11,21 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 
 
+import java.util.List;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = InventoryTalisman.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -67,16 +73,15 @@ public class TalismanEventListener {
     @SubscribeEvent
     public static void onTravellerBoost(TickEvent.PlayerTickEvent Event) {
         int a = new Random().nextInt(100);
-        IItemHandler inventory = new PlayerMainInvWrapper(Event.player.getInventory());
-        for (int i = 0; i < inventory.getSlots(); i++) {
 
-            if (Event.player.isSprinting() && a < 40 && inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_TRAVELLER.get() && !Event.player.hasEffect(MobEffects.MOVEMENT_SPEED)) {
+
+            if (Event.player.isSprinting() && a < 40 && Event.player.getMainHandItem().getItem() == ModItems.TALISMAN_TRAVELLER.get() && !Event.player.hasEffect(MobEffects.MOVEMENT_SPEED)) {
                 Event.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 3600));
 
             }
         }
 
-    }
+
 
     @SubscribeEvent
     public static void onWarriorHit(LivingHurtEvent e) {
@@ -138,14 +143,12 @@ public class TalismanEventListener {
             if (player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
                 return;
             }
-            e.setCanceled(true);
             Inventory inv = player.getInventory();
 
             for(int slot = 0; slot < inv.getContainerSize(); ++slot) {
                 ItemStack stack = inv.getItem(slot);
                 if (stack.getItem() == ModItems.TALISMAN_LAVAWALKER.get()) {
-
-
+                    e.setCanceled(true);
                     ItemStack mainStack = inv.getItem(slot);
                     mainStack.shrink(1);
                     player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
@@ -171,51 +174,6 @@ public class TalismanEventListener {
 
     }
 
-
-
-    
-    /*
-    @SubscribeEvent
-    public static void onRepairDestroyItem(PlayerDestroyItemEvent e) {
-        IItemHandler inventory = new PlayerMainInvWrapper(e.getPlayer().getInventory());
-
-        ItemStack brokenItem = e.getOriginal();
-
-        if (brokenItem.isDamaged()) {
-            ItemStack itemStack = brokenItem.copy();
-            itemStack.setDamageValue(itemStack.getDamageValue() - itemStack.getMaxDamage());
-            ItemHandlerHelper.giveItemToPlayer(e.getPlayer(), itemStack, e.getPlayer().getInventory().getSuitableHotbarSlot());
-        }
-
-
-
-
-
-
-
-    }
-
-    @SubscribeEvent
-    public static void onPlayerDestroyArmor(LivingEquipmentChangeEvent e) {
-
-        if (e.getEntity() instanceof Player player) {
-            if (e.getSlot() == EquipmentSlot.MAINHAND) {
-                return;
-            }
-            if (e.getSlot() == EquipmentSlot.OFFHAND) {
-                return;
-            }
-            if (e.getFrom().getDamageValue() <= e.getFrom().getMaxDamage() - 1) {
-
-                ItemStack itemStack = e.getTo().copy();
-                itemStack.setDamageValue(itemStack.getDamageValue() - itemStack.getMaxDamage());
-                ItemHandlerHelper.giveItemToPlayer(player, itemStack, player.getInventory().getSuitableHotbarSlot());
-            }
-        }
-    }
-
-
-     */
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -245,10 +203,24 @@ public class TalismanEventListener {
 
     }
 
-    private static int minSlot = 0;
-    private static int maxSlot = 40;
+    private static final int minSlot = 0;
+    private static final int maxSlot = 40;
 
-    public static void doubleDropsOre(LivingDestroyBlockEvent e) {
+
+
+    @SubscribeEvent
+    public static void doubleDropsOre(BlockEvent.BreakEvent e) {
+        int a = new Random().nextInt(10);
+        if (e.getPlayer().getMainHandItem().getEnchantmentTags().getAsString().contains("{id:\"minecraft:silk_touch\",lvl:1s}")) {
+            return;
+        }
+        if (e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER.get().getDefaultInstance()) && a < 3) {
+
+            List<ItemStack> List = e.getState().getBlock().getDrops(e.getState(), (ServerLevel) e.getWorld(), e.getPos(), null);
+            ItemEntity item = new ItemEntity((Level) e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), new ItemStack(List.get(0).getItem(), List.get(0).getCount()));
+            e.getWorld().addFreshEntity(item);
+
+        }
 
     }
 
@@ -260,15 +232,13 @@ public class TalismanEventListener {
             if (player.hasEffect(MobEffects.WATER_BREATHING)) {
                 return;
             }
-            e.setCanceled(true);
             for (int slot = 0; slot < inv.getContainerSize(); ++slot) {
                 ItemStack stack = inv.getItem(slot);
-                if (stack.getItem() == ModItems.TALISMAN_LAVAWALKER.get()) {
-
-
+                if (stack.getItem() == ModItems.TALISMAN_WATERBREATHER.get()) {
+                    e.setCanceled(true);
                     ItemStack mainStack = inv.getItem(slot);
                     mainStack.shrink(1);
-                    player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
+                    player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 3600));
 
 
                 }

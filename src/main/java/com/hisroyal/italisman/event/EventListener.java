@@ -83,9 +83,6 @@ public class EventListener {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_anvil2").withStyle(ChatFormatting.YELLOW));
 
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
-
-
-
         }
 
 
@@ -93,7 +90,11 @@ public class EventListener {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_waterbreather").withStyle(ChatFormatting.DARK_BLUE));
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.consumable").withStyle(ChatFormatting.GRAY));
 
+        }
 
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_ANVIL.get()) {
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_miner").withStyle(ChatFormatting.DARK_BLUE));
+            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
 
         }
 

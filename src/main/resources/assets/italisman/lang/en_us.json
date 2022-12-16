@@ -10,6 +10,7 @@
   "item.italisman.talisman_whirlwind": "Talisman of the Whirlwind",
   "item.italisman.talisman_anvil": "Talisman of the Anvil",
   "item.italisman.talisman_waterbreather": "Talisman of the Water Breather",
+  "item.italisman.talisman_miner": "Talisman of the Miner",
   "tooltip.italisman.consumable": "Consumable",
   "tooltip.italisman.non-consumable": "Non-Consumable",
   "tooltip.italisman.talisman_angel": "75% chance of completely negating fall damage",
@@ -22,7 +23,8 @@
   "tooltip.italisman.talisman_whirlwind": "75% chance of absorbing projectiles fired at you",
   "tooltip.italisman.talisman_anvil": "Repairs items in your inventory",
   "tooltip.italisman.talisman_anvil2": "Ignores the repairing procedure if you are using the item",
-  "tooltip.italisman.talisman_waterbreather": "Gives you Water Breathing for five minutes once you start drowning"
+  "tooltip.italisman.talisman_waterbreather": "Gives you Water Breathing for five minutes once you start drowning",
+  "tooltip.italisman.talisman_miner": "30% chance to give you an extra drop from an ore."
 
 
 
