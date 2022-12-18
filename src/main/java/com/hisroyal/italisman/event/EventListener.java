@@ -61,7 +61,7 @@ public class EventListener {
         }
 
 
-        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_KNIGHT.get()) {
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_LAVAWALKER.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_lavawalker").withStyle(ChatFormatting.DARK_BLUE));
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_not_work_offhand").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.consumable").withStyle(ChatFormatting.GRAY));
@@ -70,13 +70,7 @@ public class EventListener {
 
         }
 
-        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_KNIGHT.get()) {
-            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_whirlwind").withStyle(ChatFormatting.DARK_BLUE));
-            itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
 
-
-
-        }
 
         if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_ANVIL.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_anvil").withStyle(ChatFormatting.DARK_BLUE));
@@ -86,16 +80,15 @@ public class EventListener {
         }
 
 
-        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_ANVIL.get()) {
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_WATERBREATHER.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_waterbreather").withStyle(ChatFormatting.DARK_BLUE));
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.consumable").withStyle(ChatFormatting.GRAY));
 
         }
 
-        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_ANVIL.get()) {
+        if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_MINER.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_miner").withStyle(ChatFormatting.DARK_BLUE));
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
-
         }
 
 
