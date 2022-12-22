@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.PlayerEnderChestContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -31,52 +32,69 @@ import java.util.Random;
 @Mod.EventBusSubscriber(modid = InventoryTalisman.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class TalismanEventListener {
 
+    private TalismanEventListener() {
+        throw new IllegalStateException("Event Class");
+    }
+
+
     @SubscribeEvent
     public static void doubleInventoryLoot(LivingDropsEvent event) {
+        int a = new Random().nextInt(10);
         if (!(event.getSource().getEntity() instanceof Player player)) {
             return;
         }
         boolean hasItemInInventory = player.getInventory().contains(ModItems.TALISMAN_HUNTER.get().getDefaultInstance());
+        PlayerEnderChestContainer hasItemInInventoryEnder = player.getEnderChestInventory();
+        for (int i = 0; i < hasItemInInventoryEnder.getContainerSize(); i++) {
+            if (hasItemInInventoryEnder.getItem(i).getItem() == ModItems.TALISMAN_HUNTER_ENDER.get() && a < 2 || hasItemInInventory) {
+                for (ItemEntity item : event.getDrops()) {
+                    event.getEntity().spawnAtLocation(item.getItem());
+                }
+            }
+        }
+
         if(!hasItemInInventory){
             return;
         }
 
-        int a = new Random().nextInt(10);
         if (a < 2) {
             for (ItemEntity item : event.getDrops()) {
                 event.getEntity().spawnAtLocation(item.getItem());
             }
         }
-
-
-
-
     }
 
 
-
+    // Angel Talisman
     @SubscribeEvent
-    public static void onNegateFallDamageFromAngelTalisman(LivingHurtEvent Event) {
+    public static void onNegateFallDamage(LivingHurtEvent livingHurtEvent) {
+        if (!livingHurtEvent.getSource().isFall()) {
+            return;
+        }
         int a = new Random().nextInt(100);
-        if (Event.getEntity() instanceof Player player) {
-        IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_ANGEL.get() && a < 75 && Event.getSource() == DamageSource.FALL) {
-
-                Event.setCanceled(true);
-               }
+        if (livingHurtEvent.getEntity() instanceof Player player) {
+        boolean hasItemInInventory = player.getInventory().contains(ModItems.TALISMAN_ANGEL.get().getDefaultInstance());
+        boolean hasEnderItemInInventory = player.getInventory().contains(ModItems.TALISMAN_ANGEL_ENDER.get().getDefaultInstance());
+        PlayerEnderChestContainer hasItemInInventoryEnder = player.getEnderChestInventory();
+        for (int i = 0; i < hasItemInInventoryEnder.getContainerSize(); i++) {
+            if (hasItemInInventoryEnder.getItem(i).getItem() == ModItems.TALISMAN_ANGEL_ENDER.get() && a < 75 || hasEnderItemInInventory) {
+                livingHurtEvent.setCanceled(true);
             }
+        }
+
+        if (!hasItemInInventory) { return; }
+        if (a < 75) livingHurtEvent.setCanceled(true);
 
         }
     }
     // NOTE: to be worked on
     @SubscribeEvent
-    public static void onTravellerBoost(TickEvent.PlayerTickEvent Event) {
+    public static void onTravellerBoost(TickEvent.PlayerTickEvent playerTickEvent) {
         int a = new Random().nextInt(100);
 
 
-            if (Event.player.isSprinting() && a < 40 && Event.player.getMainHandItem().getItem() == ModItems.TALISMAN_TRAVELLER.get() && !Event.player.hasEffect(MobEffects.MOVEMENT_SPEED)) {
-                Event.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 3600));
+            if (playerTickEvent.player.isSprinting() && a < 40 && playerTickEvent.player.getMainHandItem().getItem() == ModItems.TALISMAN_TRAVELLER.get() && !playerTickEvent.player.hasEffect(MobEffects.MOVEMENT_SPEED)) {
+                playerTickEvent.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 3600));
 
             }
         }
@@ -85,17 +103,29 @@ public class TalismanEventListener {
 
     @SubscribeEvent
     public static void onWarriorHit(LivingHurtEvent e) {
-
-
-        if (e.getSource().isFire() || e.getSource().isExplosion() || e.getSource().isMagic() || e.getSource().isProjectile() || e.getSource().isFall()) {
+        if (e.getSource().isFire() || e.getSource().isExplosion() || e.getSource().isMagic() || e.getSource().isProjectile() || e.getSource().isFall())
             return;
-        }
+
 
 
         if (e.getEntity() instanceof Player player) {
+
+
+            PlayerEnderChestContainer enderChestInventory = player.getEnderChestInventory();
+            for (int i = 0; i < enderChestInventory.getContainerSize(); i++) {
+                if (enderChestInventory.getItem(i).getItem() == ModItems.TALISMAN_WARRIOR_ENDER.get()) {
+                    if (player.hasEffect(MobEffects.DAMAGE_BOOST)) {
+                        return;
+                    }
+                    ItemStack mainStack = enderChestInventory.getItem(i);
+                    mainStack.shrink(1);
+                    player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 4));
+
+                }
+            }
                 IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
                 for (int i = 0; i < inventory.getSlots(); i++) {
-                    if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_WARRIOR.get()) {
+                    if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_WARRIOR.get() || inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_WARRIOR_ENDER.get()) {
                         if (player.hasEffect(MobEffects.DAMAGE_BOOST)) {
                             return;
                         }
@@ -113,17 +143,30 @@ public class TalismanEventListener {
     public static void onKnightHit(LivingHurtEvent e) {
         int a = new Random().nextInt(10);
 
-        if (e.getSource().isFire() || e.getSource().isExplosion() || e.getSource().isMagic() || e.getSource().isProjectile() || e.getSource().isFall()) {
+        if (e.getSource().isFire() || e.getSource().isExplosion() || e.getSource().isMagic() || e.getSource().isProjectile() || e.getSource().isFall())
             return;
-        }
+
+
 
 
 
         if (a < 3 && e.getEntity() instanceof Player player) {
+            PlayerEnderChestContainer enderChestInventory = player.getEnderChestInventory();
+            for (int i = 0; i < enderChestInventory.getContainerSize(); i++) {
+                if (enderChestInventory.getItem(i).getItem() == ModItems.TALISMAN_KNIGHT_ENDER.get()) {
+                    if (player.hasEffect(MobEffects.REGENERATION)) {
+                        return;
+                    }
+                    ItemStack mainStack = enderChestInventory.getItem(i);
+                    mainStack.shrink(1);
+                    player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 3));
+
+                }
+            }
             IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
             for (int i = 0; i < inventory.getSlots(); i++) {
-                if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_KNIGHT.get()) {
-                    if (player.hasEffect(MobEffects.DAMAGE_BOOST)) {
+                if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_KNIGHT.get() || inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_KNIGHT_ENDER.get()) {
+                    if (player.hasEffect(MobEffects.REGENERATION)) {
                         return;
                     }
                     ItemStack mainStack = inventory.getStackInSlot(i);
@@ -140,6 +183,31 @@ public class TalismanEventListener {
     @SubscribeEvent
     public static void onLavaTouch(LivingHurtEvent e) {
         if (e.getSource() == DamageSource.LAVA && e.getEntity() instanceof Player player) {
+
+            PlayerEnderChestContainer enderChestInventory = player.getEnderChestInventory();
+            for (int i = 0; i < enderChestInventory.getContainerSize(); i++) {
+                if (enderChestInventory.getItem(i).getItem() == ModItems.TALISMAN_LAVAWALKER_ENDER.get() && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                    ItemStack mainStack = enderChestInventory.getItem(i);
+                    mainStack.shrink(1);
+                    player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
+
+                }
+            }
+            IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
+            for (int i = 0; i < inventory.getSlots(); i++) {
+                if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_LAVAWALKER.get() || inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_LAVAWALKER_ENDER.get()) {
+                    if (player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                        return;
+                    }
+                    ItemStack mainStack = inventory.getStackInSlot(i);
+                    mainStack.shrink(1);
+                    player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
+
+                }
+            }
+        }
+
+        /* if (e.getSource() == DamageSource.LAVA && e.getEntity() instanceof Player player) {
             if (player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
                 return;
             }
@@ -158,33 +226,40 @@ public class TalismanEventListener {
             }
 
 
-        }
+        } */
     }
 
-
+    /* Too Genuine, Temporarily Removed
     @SubscribeEvent
     public static void onAbsorbProjectile(LivingHurtEvent e) {
         int a = new Random().nextInt(100);
-        if (e.getSource().isProjectile() && e.getEntity() instanceof Player player) {
-            if (a < 75 && player.getInventory().contains(ModItems.TALISMAN_WHIRLWIND.get().getDefaultInstance())) {
-                e.setCanceled(true);
-            }
-
+        if (e.getSource().isProjectile() && e.getEntity() instanceof Player player && a < 75 && player.getInventory().contains(ModItems.TALISMAN_WHIRLWIND.get().getDefaultInstance())) {
+            e.setCanceled(true);
         }
 
     }
+    */
+
 
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        int delay = 150;
         Player player = event.player;
         Inventory inv = player.getInventory();
 
         for(int slot = 0; slot < inv.getContainerSize(); ++slot) {
             ItemStack stack = inv.getItem(slot);
-            int delay = 150;
-            if (stack.getItem() == ModItems.TALISMAN_ANVIL.get() && player.tickCount % delay == 0) {
+            if (stack.getItem() == ModItems.TALISMAN_ANVIL.get() && player.tickCount % delay == 0 || stack.getItem() == ModItems.TALISMAN_ANVIL_ENDER.get() && player.tickCount % delay == 0) {
                 repair(player, inv);
+            }
+        }
+
+        PlayerEnderChestContainer hasItemInInventoryEnder = player.getEnderChestInventory();
+        for (int i = 0; i < hasItemInInventoryEnder.getContainerSize(); i++) {
+            if (hasItemInInventoryEnder.getItem(i).getItem() == ModItems.TALISMAN_ANVIL_ENDER.get() && player.tickCount % delay == 0) {
+                repair(player, inv);
+
             }
         }
 
@@ -193,7 +268,7 @@ public class TalismanEventListener {
     private static void repair(Player player, Inventory inv) {
 
 
-        for(int slot = minSlot; slot < maxSlot; ++slot) {
+        for(int slot = MIN_SLOT; slot < MAX_SLOT; ++slot) {
             ItemStack target = inv.getItem(slot);
             if (!target.isEmpty() && target != player.getMainHandItem() && target.isDamaged()) {
                 target.setDamageValue(target.getDamageValue() - 1);
@@ -203,8 +278,8 @@ public class TalismanEventListener {
 
     }
 
-    private static final int minSlot = 0;
-    private static final int maxSlot = 40;
+    private static final int MIN_SLOT = 0;
+    private static final int MAX_SLOT = 40;
 
 
 
@@ -216,8 +291,8 @@ public class TalismanEventListener {
         }
         if (e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER.get().getDefaultInstance()) && a < 3) {
 
-            List<ItemStack> List = e.getState().getBlock().getDrops(e.getState(), (ServerLevel) e.getWorld(), e.getPos(), null);
-            ItemEntity item = new ItemEntity((Level) e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), new ItemStack(List.get(0).getItem(), List.get(0).getCount()));
+            List<ItemStack> itemStackList = e.getState().getBlock().getDrops(e.getState(), (ServerLevel) e.getWorld(), e.getPos(), null);
+            ItemEntity item = new ItemEntity((Level) e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), new ItemStack(itemStackList.get(0).getItem(), itemStackList.get(0).getCount()));
             e.getWorld().addFreshEntity(item);
 
         }
