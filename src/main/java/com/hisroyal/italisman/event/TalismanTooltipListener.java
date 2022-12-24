@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = InventoryTalisman.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 
-public class EventListener {
+public class TalismanTooltipListener {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
