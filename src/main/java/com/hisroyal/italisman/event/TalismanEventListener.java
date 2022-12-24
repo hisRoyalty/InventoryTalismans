@@ -162,6 +162,7 @@ public class TalismanEventListener {
             PlayerEnderChestContainer enderChestInventory = player.getEnderChestInventory();
             for (int i = 0; i < enderChestInventory.getContainerSize(); i++) {
                 if (enderChestInventory.getItem(i).getItem() == ModItems.TALISMAN_LAVAWALKER_ENDER.get() && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                    e.setCanceled(true);
                     ItemStack mainStack = enderChestInventory.getItem(i);
                     mainStack.shrink(1);
                     player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
@@ -174,6 +175,7 @@ public class TalismanEventListener {
                     if (player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
                         return;
                     }
+                    e.setCanceled(true);
                     ItemStack mainStack = inventory.getStackInSlot(i);
                     mainStack.shrink(1);
                     player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
@@ -288,27 +290,7 @@ public class TalismanEventListener {
         }
     }
 
-    /*@SubscribeEvent
-    public static void onPlayerDrown(LivingHurtEvent e) {
 
-        if (e.getSource() == DamageSource.DROWN && e.getEntity() instanceof Player player) {
-            Inventory inv = player.getInventory();
-            if (player.hasEffect(MobEffects.WATER_BREATHING)) {
-                return;
-            }
-            for (int slot = 0; slot < inv.getContainerSize(); ++slot) {
-                ItemStack stack = inv.getItem(slot);
-                if (stack.getItem() == ModItems.TALISMAN_WATERBREATHER.get()) {
-                    e.setCanceled(true);
-                    ItemStack mainStack = inv.getItem(slot);
-                    mainStack.shrink(1);
-                    player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 3600));
-
-
-                }
-            }
-        }
-    }*/
 
     @SubscribeEvent
     public static void onPlayerDrown(LivingHurtEvent e) {
@@ -316,7 +298,8 @@ public class TalismanEventListener {
 
             PlayerEnderChestContainer enderChestInventory = player.getEnderChestInventory();
             for (int i = 0; i < enderChestInventory.getContainerSize(); i++) {
-                if (enderChestInventory.getItem(i).getItem() == ModItems.TALISMAN_WATERBREATHER_ENDER.get() && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                if (enderChestInventory.getItem(i).getItem() == ModItems.TALISMAN_WATERBREATHER_ENDER.get() && !player.hasEffect(MobEffects.WATER_BREATHING)) {
+                    e.setCanceled(true);
                     ItemStack mainStack = enderChestInventory.getItem(i);
                     mainStack.shrink(1);
                     player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 3600));
@@ -329,6 +312,7 @@ public class TalismanEventListener {
                     if (player.hasEffect(MobEffects.WATER_BREATHING)) {
                         return;
                     }
+                    e.setCanceled(true);
                     ItemStack mainStack = inventory.getStackInSlot(i);
                     mainStack.shrink(1);
                     player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 3600));
