@@ -69,7 +69,7 @@ public class TalismanEventListener {
 
 
             if (playerTickEvent.player.isSprinting() && a < 40 && playerTickEvent.player.getMainHandItem().getItem() == ModItems.TALISMAN_TRAVELLER.get() && !playerTickEvent.player.hasEffect(MobEffects.MOVEMENT_SPEED)) {
-                playerTickEvent.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 3600));
+                playerTickEvent.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40));
 
             }
         }
