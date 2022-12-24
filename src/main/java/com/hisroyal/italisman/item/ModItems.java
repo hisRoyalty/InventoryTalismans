@@ -30,6 +30,8 @@ public class ModItems {
     public static final RegistryObject<Item> TALISMAN_WARRIOR_ENDER = ITEMS.register("ender_talisman_warrior", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
     public static final RegistryObject<Item> TALISMAN_KNIGHT_ENDER = ITEMS.register("ender_talisman_knight", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
     public static final RegistryObject<Item> TALISMAN_LAVAWALKER_ENDER = ITEMS.register("ender_talisman_lavawalker", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+    public static final RegistryObject<Item> TALISMAN_WATERBREATHER_ENDER = ITEMS.register("ender_talisman_waterbreather", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
+    public static final RegistryObject<Item> TALISMAN_MINER_ENDER = ITEMS.register("ender_talisman_miner", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
     public static final RegistryObject<Item> TALISMAN_ANVIL_ENDER = ITEMS.register("ender_talisman_anvil", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.TALISMAN_TAB).rarity(Rarity.RARE).stacksTo(16)));
 
 

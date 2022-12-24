@@ -65,9 +65,6 @@ public class EventListener {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_lavawalker").withStyle(ChatFormatting.DARK_BLUE));
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_not_work_offhand").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.consumable").withStyle(ChatFormatting.GRAY));
-
-
-
         }
 
 
@@ -75,7 +72,6 @@ public class EventListener {
         if (itemTooltipEvent.getItemStack().getItem() == ModItems.TALISMAN_ANVIL.get()) {
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_anvil").withStyle(ChatFormatting.DARK_BLUE));
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.talisman_anvil2").withStyle(ChatFormatting.YELLOW));
-
             itemTooltipEvent.getToolTip().add(new TranslatableComponent("tooltip.italisman.non-consumable").withStyle(ChatFormatting.GRAY));
         }
 

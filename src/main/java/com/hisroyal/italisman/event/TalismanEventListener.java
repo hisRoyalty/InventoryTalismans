@@ -37,32 +37,7 @@ public class TalismanEventListener {
     }
 
 
-    @SubscribeEvent
-    public static void doubleInventoryLoot(LivingDropsEvent event) {
-        int a = new Random().nextInt(10);
-        if (!(event.getSource().getEntity() instanceof Player player)) {
-            return;
-        }
-        boolean hasItemInInventory = player.getInventory().contains(ModItems.TALISMAN_HUNTER.get().getDefaultInstance());
-        PlayerEnderChestContainer hasItemInInventoryEnder = player.getEnderChestInventory();
-        for (int i = 0; i < hasItemInInventoryEnder.getContainerSize(); i++) {
-            if (hasItemInInventoryEnder.getItem(i).getItem() == ModItems.TALISMAN_HUNTER_ENDER.get() && a < 2 || hasItemInInventory) {
-                for (ItemEntity item : event.getDrops()) {
-                    event.getEntity().spawnAtLocation(item.getItem());
-                }
-            }
-        }
 
-        if(!hasItemInInventory){
-            return;
-        }
-
-        if (a < 2) {
-            for (ItemEntity item : event.getDrops()) {
-                event.getEntity().spawnAtLocation(item.getItem());
-            }
-        }
-    }
 
 
     // Angel Talisman
@@ -206,27 +181,6 @@ public class TalismanEventListener {
                 }
             }
         }
-
-        /* if (e.getSource() == DamageSource.LAVA && e.getEntity() instanceof Player player) {
-            if (player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
-                return;
-            }
-            Inventory inv = player.getInventory();
-
-            for(int slot = 0; slot < inv.getContainerSize(); ++slot) {
-                ItemStack stack = inv.getItem(slot);
-                if (stack.getItem() == ModItems.TALISMAN_LAVAWALKER.get()) {
-                    e.setCanceled(true);
-                    ItemStack mainStack = inv.getItem(slot);
-                    mainStack.shrink(1);
-                    player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600));
-
-
-                }
-            }
-
-
-        } */
     }
 
     /* Too Genuine, Temporarily Removed
@@ -284,12 +238,12 @@ public class TalismanEventListener {
 
 
     @SubscribeEvent
-    public static void doubleDropsOre(BlockEvent.BreakEvent e) {
+    public static void addExtraOre(BlockEvent.BreakEvent e) {
         int a = new Random().nextInt(10);
         if (e.getPlayer().getMainHandItem().getEnchantmentTags().getAsString().contains("{id:\"minecraft:silk_touch\",lvl:1s}")) {
             return;
         }
-        if (e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER.get().getDefaultInstance()) && a < 3) {
+        if (e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER.get().getDefaultInstance()) || e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER_ENDER.get().getDefaultInstance()) && a < 3) {
 
             List<ItemStack> itemStackList = e.getState().getBlock().getDrops(e.getState(), (ServerLevel) e.getWorld(), e.getPos(), null);
             ItemEntity item = new ItemEntity((Level) e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), new ItemStack(itemStackList.get(0).getItem(), itemStackList.get(0).getCount()));
@@ -297,9 +251,44 @@ public class TalismanEventListener {
 
         }
 
-    }
+        PlayerEnderChestContainer hasItemInInventoryEnder = e.getPlayer().getEnderChestInventory();
+        for (int i = 0; i < hasItemInInventoryEnder.getContainerSize(); i++) {
+            if (e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && hasItemInInventoryEnder.getItem(i).getItem() == ModItems.TALISMAN_MINER_ENDER.get() && a < 3) {
+                List<ItemStack> itemStackList = e.getState().getBlock().getDrops(e.getState(), (ServerLevel) e.getWorld(), e.getPos(), null);
+                ItemEntity item = new ItemEntity((Level) e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), new ItemStack(itemStackList.get(0).getItem(), itemStackList.get(0).getCount()));
+                e.getWorld().addFreshEntity(item);
+            }
+            }
+        }
 
     @SubscribeEvent
+    public static void doubleInventoryLoot(LivingDropsEvent event) {
+        int a = new Random().nextInt(10);
+        if (!(event.getSource().getEntity() instanceof Player player)) {
+            return;
+        }
+        boolean hasItemInInventory = player.getInventory().contains(ModItems.TALISMAN_HUNTER.get().getDefaultInstance());
+        PlayerEnderChestContainer hasItemInInventoryEnder = player.getEnderChestInventory();
+        for (int i = 0; i < hasItemInInventoryEnder.getContainerSize(); i++) {
+            if (hasItemInInventoryEnder.getItem(i).getItem() == ModItems.TALISMAN_HUNTER_ENDER.get() && a < 2 || hasItemInInventory) {
+                for (ItemEntity item : event.getDrops()) {
+                    event.getEntity().spawnAtLocation(item.getItem());
+                }
+            }
+        }
+
+        if(!hasItemInInventory){
+            return;
+        }
+
+        if (a < 2) {
+            for (ItemEntity item : event.getDrops()) {
+                event.getEntity().spawnAtLocation(item.getItem());
+            }
+        }
+    }
+
+    /*@SubscribeEvent
     public static void onPlayerDrown(LivingHurtEvent e) {
 
         if (e.getSource() == DamageSource.DROWN && e.getEntity() instanceof Player player) {
@@ -319,20 +308,35 @@ public class TalismanEventListener {
                 }
             }
         }
+    }*/
+
+    @SubscribeEvent
+    public static void onPlayerDrown(LivingHurtEvent e) {
+        if (e.getSource() == DamageSource.DROWN && e.getEntity() instanceof Player player) {
+
+            PlayerEnderChestContainer enderChestInventory = player.getEnderChestInventory();
+            for (int i = 0; i < enderChestInventory.getContainerSize(); i++) {
+                if (enderChestInventory.getItem(i).getItem() == ModItems.TALISMAN_WATERBREATHER_ENDER.get() && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                    ItemStack mainStack = enderChestInventory.getItem(i);
+                    mainStack.shrink(1);
+                    player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 3600));
+
+                }
+            }
+            IItemHandler inventory = new PlayerMainInvWrapper(player.getInventory());
+            for (int i = 0; i < inventory.getSlots(); i++) {
+                if (inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_WATERBREATHER.get() || inventory.getStackInSlot(i).getItem() == ModItems.TALISMAN_WATERBREATHER_ENDER.get()) {
+                    if (player.hasEffect(MobEffects.WATER_BREATHING)) {
+                        return;
+                    }
+                    ItemStack mainStack = inventory.getStackInSlot(i);
+                    mainStack.shrink(1);
+                    player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 3600));
+
+                }
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
