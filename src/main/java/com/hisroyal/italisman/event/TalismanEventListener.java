@@ -245,12 +245,16 @@ public class TalismanEventListener {
         if (e.getPlayer().getMainHandItem().getEnchantmentTags().getAsString().contains("{id:\"minecraft:silk_touch\",lvl:1s}")) {
             return;
         }
-        if (e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER.get().getDefaultInstance()) || e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER_ENDER.get().getDefaultInstance()) && a < 3) {
-
+        if (e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER_ENDER.get().getDefaultInstance()) && a < 3) {
             List<ItemStack> itemStackList = e.getState().getBlock().getDrops(e.getState(), (ServerLevel) e.getWorld(), e.getPos(), null);
             ItemEntity item = new ItemEntity((Level) e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), new ItemStack(itemStackList.get(0).getItem(), itemStackList.get(0).getCount()));
             e.getWorld().addFreshEntity(item);
 
+        }
+        if (e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER.get().getDefaultInstance()) || e.getPlayer().getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) && e.getPlayer().getMainHandItem().isCorrectToolForDrops(e.getState()) && e.getState().is(Tags.Blocks.ORES) && e.getPlayer().getInventory().contains(ModItems.TALISMAN_MINER_ENDER.get().getDefaultInstance()) && a < 3) {
+            List<ItemStack> itemStackList = e.getState().getBlock().getDrops(e.getState(), (ServerLevel) e.getWorld(), e.getPos(), null);
+            ItemEntity item = new ItemEntity((Level) e.getWorld(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), new ItemStack(itemStackList.get(0).getItem(), itemStackList.get(0).getCount()));
+            e.getWorld().addFreshEntity(item);
         }
 
         PlayerEnderChestContainer hasItemInInventoryEnder = e.getPlayer().getEnderChestInventory();
